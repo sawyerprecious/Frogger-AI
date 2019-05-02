@@ -103,12 +103,6 @@ public class Brain {
 
     private void updateNeurons() {
 
-//        for (int n : neurons.keySet()) {
-//            if (genome.getNodes().get(n).getType() != NodeGene.GENETYPE.INPUT) {
-//                neurons.get(n).val = 0;
-//            }
-//        }
-
         for (ConnectionGene cg : genome.getConnections().values()) {
 
 

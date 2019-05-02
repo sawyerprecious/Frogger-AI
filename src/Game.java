@@ -448,7 +448,6 @@ public class Game implements ActionListener {
 
                 if (brainInUse == brains[brains.length - 1]) {
 
-                    // TODO: handle reproducing
 
                     eval.evaluate();
                     System.out.print("Generation: "+genNum);
@@ -456,7 +455,7 @@ public class Game implements ActionListener {
                     System.out.print("\tAmount of species: "+eval.getSpeciesAmount());
                     System.out.print("\n");
 
-                    if (genNum%10==1) {
+                    if (genNum%5==1) {
                         CreateGenomeImage.createGenomeImage(eval.getFittestGenome(), "/Users/sawyerprecious/Desktop/Projects/Frogger/trunk/output/"+genNum+".png");
                     }
 
@@ -503,163 +502,6 @@ public class Game implements ActionListener {
         genNum++;
     }
 
-//    // TODO: set this up to use genomes (maybe get rid of and do it with initBrains?)
-//    private void reproduceBrains() {
-//        Brain[] newBrains = new Brain[20];
-//
-//        microStep = 0;
-//
-//        float normalize = 0;
-//
-//        Brain best = null;
-//        Brain best2 = null;
-//
-//        for (Brain b : brains) {
-//            normalize = normalize + b.fitness;
-//            if (best == null || b.fitness > best.fitness) {
-//                best2 = best;
-//                best = b;
-//            }
-//            if (best2 == null || (best2.fitness < b.fitness && best.fitness > b.fitness)) {
-//                best2 = b;
-//            }
-//        }
-//
-//        Random r = new Random();
-//
-//        // keep best 2 brains
-//
-//        newBrains[0] = best;
-//        newBrains[1] = best2;
-//
-//        // asexual
-//
-//        for (int i = 2; i < (brains.length / 5) * 2; i++) {
-//
-//            float rand = r.nextFloat() * normalize;
-//
-//            boolean assigned = false;
-//
-//            float total = 0;
-//
-//            if (normalize == 0) {
-//
-//                Brain rbrain = new Brain(this);
-//                rbrain.setupObservations(board.getModel(), loc[1], loc[0]);
-//                rbrain.updateInputs();
-//
-//                newBrains[i] = rbrain;
-//
-//                assigned = true;
-//
-//            } else {
-//
-//                Brain parent = new Brain(this);
-//
-//                int k = 0;
-//
-//                for (Brain b : brains) {
-//                    total = total + b.fitness;
-//                    float chance = total;
-//
-//
-//
-//                    if (chance >= rand && !assigned) {
-//                        parent = brains[k];
-//                        assigned = true;
-//                    }
-//
-//                    k++;
-//                }
-//
-//                Brain nb = new Brain(this);
-//                nb.setupObservations(board.getModel(), loc[1], loc[0]);
-//                nb.updateInputs();
-//                nb.makeTraits(parent);
-//
-//                newBrains[i] = nb;
-//
-//            }
-//
-//        }
-//
-//        //sexual
-//
-//        for (int i = (brains.length / 5) * 2; i < (brains.length / 5) * 4; i++) {
-//
-//            float rand1 = r.nextFloat() * normalize;
-//            float rand2 = r.nextFloat() * normalize;
-//
-//            boolean firstAssigned = false;
-//            boolean secondAssigned = false;
-//
-//            float total = 0;
-//
-//            if (normalize == 0) {
-//
-//                newBrains[i] = new Brain(this);
-//
-//            } else {
-//
-//                Brain parent1 = new Brain(this);
-//                Brain parent2 = new Brain(this);
-//
-//                int k = 0;
-//
-//                for (Brain b : brains) {
-//                    total = total + b.fitness;
-//                    float chance = total;
-//
-//
-//                    if (chance >= rand1 && !firstAssigned) {
-//                        parent1 = brains[k];
-//                        firstAssigned = true;
-//                    }
-//
-//                    if (chance >= rand2 && !secondAssigned) {
-//                        parent2 = brains[k];
-//                        secondAssigned = true;
-//                    }
-//
-//                    k++;
-//                }
-//
-//                Brain nb = new Brain(this);
-//                nb.setupObservations(board.getModel(), loc[1], loc[0]);
-//                nb.updateInputs();
-//                nb.makeTraits(parent1, parent2);
-//
-//                newBrains[i] = nb;
-//            }
-//        }
-//
-//        // random for last fifth
-//
-//        for (int i = (brains.length / 5) * 4; i < brains.length; i++) {
-//            Brain nb = new Brain(this);
-//            nb.setupObservations(board.getModel(), loc[1], loc[0]);
-//            nb.updateInputs();
-//
-//            newBrains[i] = nb;
-//        }
-//
-//        iterationThisGen = 0;
-//
-//
-//        System.out.println("Average fitness for generation " + genNum + ": " + (normalize / brains.length));
-//        System.out.println("Best fitness for generation " + genNum + ": " + best.fitness);
-//        System.out.println("New Generation: " + (genNum + 1));
-//
-//        newBrains[0].fitness = 0;
-//        newBrains[1].fitness = 0;
-//
-//        brains = newBrains;
-//
-//        brainInUse = brains[0];
-//    }
-
-
-
 
 
 
@@ -702,30 +544,11 @@ public class Game implements ActionListener {
         }
 
         // direction
-        if (loc[0] % 2 == 0) {
+        if (loc[1] % 2 == 0) {
             toReturn.add(true);
         } else {
             toReturn.add(false);
         }
-
-//        for (int x = 0; x < 5; x++) {
-//            for (int y = 0; y < 4; y++) {
-//                if (loc[1] - 2 + x < 0 || loc[0] - 1 + y < 0) {
-//                    toReturn.add(true);
-//                } else {
-//                    toReturn.add(board.getModel().getValueAt(y, x) == "0");
-//                }
-//            }
-//        }
-//
-//
-//        if (loc[0] % 2 == 0) {
-//            toReturn.add(true);
-//            toReturn.add(true);
-//        } else {
-//            toReturn.add(false);
-//            toReturn.add(false);
-//        }
 
         return toReturn;
     }
@@ -749,29 +572,12 @@ public class Game implements ActionListener {
         int n4 = nodeInnovation.getInnovation();
         int n5 = nodeInnovation.getInnovation();
         int n6 = nodeInnovation.getInnovation();
-//        int n7 = nodeInnovation.getInnovation();
-//        int n8 = nodeInnovation.getInnovation();
-//        int n9 = nodeInnovation.getInnovation();
-//        int n10 = nodeInnovation.getInnovation();
-//        int n11 = nodeInnovation.getInnovation();
-//        int n12 = nodeInnovation.getInnovation();
-//        int n13 = nodeInnovation.getInnovation();
-//        int n14 = nodeInnovation.getInnovation();
-//        int n15 = nodeInnovation.getInnovation();
-//        int n16 = nodeInnovation.getInnovation();
-//        int n17 = nodeInnovation.getInnovation();
-//        int n18 = nodeInnovation.getInnovation();
-//        int n19 = nodeInnovation.getInnovation();
-//        int n20 = nodeInnovation.getInnovation();
-//        int n21 = nodeInnovation.getInnovation();
-//        int n22 = nodeInnovation.getInnovation();
 
         // TODO: use a loop here too
         int n7 = nodeInnovation.getInnovation();
         int n8 = nodeInnovation.getInnovation();
         int n9 = nodeInnovation.getInnovation();
         int n10 = nodeInnovation.getInnovation();
-//        int n11 = nodeInnovation.getInnovation();
 
         // TODO: set types using a loop
         genome.addNodeGene(new NodeGene(NodeGene.GENETYPE.INPUT, n1));
@@ -785,7 +591,6 @@ public class Game implements ActionListener {
         genome.addNodeGene(new NodeGene(NodeGene.GENETYPE.OUTPUT, n8));
         genome.addNodeGene(new NodeGene(NodeGene.GENETYPE.OUTPUT, n9));
         genome.addNodeGene(new NodeGene(NodeGene.GENETYPE.OUTPUT, n10));
-//        genome.addNodeGene(new NodeGene(NodeGene.GENETYPE.OUTPUT, n11));
 
 
         for (int i = 0; i < 6; i++) {
