@@ -14,8 +14,8 @@ public class App {
 
     private Game game;
 
-    public int numGens;
-    public int diffIndex;
+    private int numGens;
+    private int diffIndex;
 
     public App() {
         buttonEnter.addActionListener(new ActionListener() {

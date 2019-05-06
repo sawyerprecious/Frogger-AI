@@ -8,11 +8,9 @@ import java.util.Map;
  */
 public class Neuron {
 
-    // TODO: replace public stuff with getters and setters
-
-    public float val;
-    public LinkedHashMap<Neuron, Float> mapInputs;
-    public LinkedHashMap<Neuron, Float> mapOutputs;
+    private float val;
+    private LinkedHashMap<Neuron, Float> mapInputs;
+    private LinkedHashMap<Neuron, Float> mapOutputs;
 
     public Neuron(LinkedHashMap<Neuron, Float> inputs, int v) {
 
@@ -29,6 +27,30 @@ public class Neuron {
         mapOutputs = new LinkedHashMap<>();
 
 
+    }
+
+    public float getVal() {
+        return val;
+    }
+
+    public LinkedHashMap<Neuron, Float> getInputMap() {
+        return mapInputs;
+    }
+
+    public LinkedHashMap<Neuron, Float> getOutputMap() {
+        return mapOutputs;
+    }
+
+    public void setVal(float val) {
+        this.val = val;
+    }
+
+    public void setInputMap(LinkedHashMap<Neuron, Float> in) {
+        mapInputs = in;
+    }
+
+    public void setOutputMap(LinkedHashMap<Neuron, Float> out) {
+        mapInputs = out;
     }
 
     public void notifyOutputs() {

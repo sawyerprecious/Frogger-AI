@@ -219,8 +219,6 @@ public class Genome {
 
     }
 
-    // TODO: make countMatchingGenes, countExcessGenes, countDisjointGenes, and averageWeightDiff 1 method
-
 
     public static int countMatchingGenes(Genome genome1, Genome genome2) {
 

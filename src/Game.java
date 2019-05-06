@@ -21,7 +21,7 @@ import static java.lang.StrictMath.min;
 
 public class Game implements ActionListener {
 
-    public int numLanes;
+    private int numLanes;
     public JPanel gamePanel;
 
     private JTable board;
@@ -240,7 +240,7 @@ public class Game implements ActionListener {
         TableModel model = board.getModel();
 
         // kill if stagnant
-        if (brainInUse.moves > 200) {
+        if (brainInUse.getMoves() > 200) {
             dead = true;
         }
 
@@ -357,32 +357,32 @@ public class Game implements ActionListener {
                     f = (f * 20);
                 }
 
-                if (brainInUse.numInRow != 0) {
-                    f = max(f / brainInUse.numInRow, 1);
+                if (brainInUse.getNumInRow() != 0) {
+                    f = max(f / brainInUse.getNumInRow(), 1);
                 }
 
 
-                f = f / (brainInUse.moves * new Float(0.1));
+                f = f / (brainInUse.getMoves() * new Float(0.1));
 
-                if (brainInUse.numInRow >= 25) {
+                if (brainInUse.getNumInRow() >= 25) {
 
                     f = 0;
 
-                    if (brainInUse.lastMove == 3) {
+                    if (brainInUse.getLastMove() == 3) {
 
-                        brainInUse.fitness = brainInUse.fitness - 700;
-                        brainInUse.lastMove = 0;
-                        brainInUse.numInRow = 0;
+                        brainInUse.setFitness(brainInUse.getFitness() - 700);
+                        brainInUse.setLastMove(0);
+                        brainInUse.setNumInRow(0);
 
                     }
                 }
 
-                brainInUse.numInRow = 0;
+                brainInUse.setNumInRow(0);
 
 
-                brainInUse.fitness = brainInUse.fitness + f;
+                brainInUse.setFitness(brainInUse.getFitness() + f);
 
-                brainInUse.moves = 0;
+                brainInUse.setMoves(0);
 
                 dead = false;
                 complete = false;
@@ -418,31 +418,31 @@ public class Game implements ActionListener {
                     f = (f * 20);
                 }
 
-                if (brainInUse.numInRow != 0) {
-                    f = max(f / brainInUse.numInRow, 1);
+                if (brainInUse.getNumInRow() != 0) {
+                    f = max(f / brainInUse.getNumInRow(), 1);
                 }
 
-                f = f / (brainInUse.moves * new Float(0.1));
+                f = f / (brainInUse.getMoves() * new Float(0.1));
 
                 f = f / 10;
 
-                if (brainInUse.numInRow >= 25) {
+                if (brainInUse.getNumInRow() >= 25) {
 
                     f = 0;
 
-                    if (brainInUse.lastMove == 3) {
+                    if (brainInUse.getLastMove() == 3) {
 
-                        brainInUse.fitness = brainInUse.fitness - 700;
-                        brainInUse.lastMove = 0;
-                        brainInUse.numInRow = 0;
+                        brainInUse.setFitness(brainInUse.getFitness() - 700);
+                        brainInUse.setLastMove(0);
+                        brainInUse.setNumInRow(0);
 
                     }
                 }
 
-                brainInUse.numInRow = 0;
+                brainInUse.setNumInRow(0);
 
 
-                brainInUse.fitness = max(0, brainInUse.fitness + f);
+                brainInUse.setFitness(max(0, brainInUse.getFitness() + f));
                 iterationThisGen++;
 
 
@@ -486,7 +486,6 @@ public class Game implements ActionListener {
     }
 
 
-    // TODO: set this up to use genomes
     private void initBrains() {
         brains = new Brain[100];
         microStep = 0;
@@ -565,7 +564,6 @@ public class Game implements ActionListener {
 
         Genome genome = new Genome();
 
-        // TODO: clean up adding input nodes with a loop
         int n1 = nodeInnovation.getInnovation();
         int n2 = nodeInnovation.getInnovation();
         int n3 = nodeInnovation.getInnovation();
@@ -573,13 +571,11 @@ public class Game implements ActionListener {
         int n5 = nodeInnovation.getInnovation();
         int n6 = nodeInnovation.getInnovation();
 
-        // TODO: use a loop here too
         int n7 = nodeInnovation.getInnovation();
         int n8 = nodeInnovation.getInnovation();
         int n9 = nodeInnovation.getInnovation();
         int n10 = nodeInnovation.getInnovation();
 
-        // TODO: set types using a loop
         genome.addNodeGene(new NodeGene(NodeGene.GENETYPE.INPUT, n1));
         genome.addNodeGene(new NodeGene(NodeGene.GENETYPE.INPUT, n2));
         genome.addNodeGene(new NodeGene(NodeGene.GENETYPE.INPUT, n3));
@@ -607,7 +603,7 @@ public class Game implements ActionListener {
             @Override
             protected float evaluateGenome(final Genome genome) {
 
-                return max(1, genome.getBrain().fitness);
+                return max(1, genome.getBrain().getFitness());
             }
         };
 
